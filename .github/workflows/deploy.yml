@@ -2,8 +2,7 @@ name: Repository Information
 
 on:
   push:
-    branches: -main
-      -master
+    branches: -master
 
 jobs:
   read-info:
