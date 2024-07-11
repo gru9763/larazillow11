@@ -1,23 +1,17 @@
-name: Repository Information
+name: Test GitHub Actions
 
 on:
   push:
-    branches: -master
+    branches:
+      - master # Trigger deployment on push to the main branch
 
 jobs:
-  read-info:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Read repository info
-        uses: actions/github-script@v5
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            console.log(`Repository Name: ${repo.name}`);
-            console.log(`Repository Owner: ${repo.owner.login}`);
-            console.log(`Repository URL: ${repo.html_url}`);
-            console.log(`Default Branch: ${repo.default_branch}`);
+      - name: update Composer dependencies
+        run: composer install --no-interaction --no-progress --no-suggest
