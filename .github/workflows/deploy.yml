@@ -1,7 +1,9 @@
-name: Read Repository Information
+name: Repository Information
 
 on:
-  workflow_dispatch: # This allows manual triggering of the workflow
+  push:
+    branches: -main
+      -master
 
 jobs:
   read-info:
@@ -16,7 +18,6 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const repo = github.context.payload.repository;
             console.log(`Repository Name: ${repo.name}`);
             console.log(`Repository Owner: ${repo.owner.login}`);
             console.log(`Repository URL: ${repo.html_url}`);
