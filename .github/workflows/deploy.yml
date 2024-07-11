@@ -1,0 +1,32 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches:
+      - main # Trigger deployment on push to the main branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install PHP and dependencies
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "7.4" # Adjust PHP version as per your project requirements
+
+      - name: Install Composer dependencies
+        run: composer install --no-interaction --no-progress --no-suggest
+
+      # - name: Deploy via SSH
+      #   uses: easingthemes/ssh-deploy@v2.1.5
+      #   with:
+      #     server_ip: ${{ secrets.SERVER_IP }}
+      #     server_port: ${{ secrets.SERVER_PORT }}
+      #     repo_path: 'path/to/laravel/project'
+      #     repo_url: ${{ secrets.REPO_URL }}
+      #     ssh_key: ${{ secrets.SSH_PRIVATE_KEY }}
+      #     remote_path: 'path/on/server'
