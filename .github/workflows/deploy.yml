@@ -1,32 +1,23 @@
-name: Deploy to Production
+name: Read Repository Information
 
 on:
-  push:
-    branches:
-      - master # Trigger deployment on push to the main branch
+  workflow_dispatch: # This allows manual triggering of the workflow
 
 jobs:
-  deploy:
+  read-info:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Install PHP and dependencies
-        uses: shivammathur/setup-php@v2
+      - name: Read repository info
+        uses: actions/github-script@v5
         with:
-          php-version: "7.4" # Adjust PHP version as per your project requirements
-
-      - name: Install Composer dependencies
-        run: composer install --no-interaction --no-progress --no-suggest
-
-      # - name: Deploy via SSH
-      #   uses: easingthemes/ssh-deploy@v2.1.5
-      #   with:
-      #     server_ip: ${{ secrets.SERVER_IP }}
-      #     server_port: ${{ secrets.SERVER_PORT }}
-      #     repo_path: 'path/to/laravel/project'
-      #     repo_url: ${{ secrets.REPO_URL }}
-      #     ssh_key: ${{ secrets.SSH_PRIVATE_KEY }}
-      #     remote_path: 'path/on/server'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const repo = github.context.payload.repository;
+            console.log(`Repository Name: ${repo.name}`);
+            console.log(`Repository Owner: ${repo.owner.login}`);
+            console.log(`Repository URL: ${repo.html_url}`);
+            console.log(`Default Branch: ${repo.default_branch}`);
