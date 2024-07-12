@@ -12,11 +12,14 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v2
       - name: Install Dependencies
-        uses: composer install
+        run: composer install
       - name: Build and Test
         run: |
           php artisan build
           php artisan test
+
+      - name: Run tests
+        run: php vendor/bin/phpunit
       # - name: Deploy
       #   uses: actions/deploy@v2
       #   with:
