@@ -1,37 +1,15 @@
-name: CI
+name: Deploy Laravel Project
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - main
 
 jobs:
-  laravel-tests:
+  deploy:
     runs-on: ubuntu-latest
-
-    services:
-      mysql:
-        image: mysql:5.7
-        env:
-          MYSQL_ROOT_PASSWORD: root
-          MYSQL_DATABASE: laravel
-        ports:
-          - 3306:3306
-        options: >-
-          --health-cmd="mysqladmin ping --silent"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=3
-
     steps:
-      - uses: actions/checkout@v2
-
-      - name: Copy .env.example to .env
-        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
-
-      - name: Create database
-        run: |
-          mysql -u root -proot -e 'CREATE DATABASE IF NOT EXISTS laravel;'
-
-      - name: Run migrations
-        run: php artisan migrate --force
-
-      - name: Run tests
-        run: vendor/bin/phpunit
+      - name: Checkout Code
+        uses: actions/checkout@v2
+      - name: Install Dependencies
+        uses: actions/setup-php@v2
