@@ -12,7 +12,7 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v2
       - name: Install Dependencies
-        uses: actions/setup-php@v2
+        uses: composer install
       - name: Build and Test
         run: |
           php artisan build
