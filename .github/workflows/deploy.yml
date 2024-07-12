@@ -11,24 +11,9 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
-      - name: Install Dependencies
-        run: composer update
       - name: Build and Test
         run: |
           php artisan build
           php artisan test
-
       - name: Run tests
         run: php vendor/bin/phpunit
-      # - name: Deploy
-      #   uses: actions/deploy@v2
-      #   with:
-      #     deploy-script: "php artisan deploy"
-      #     # server: "your-server-ip"
-      #     # credentials: "your-deployment-credentials"
-      # # - name: Configure Environment Variables
-      # #   uses: actions/env@v2
-      # #   with:
-      # #     variables: |
-      # #       APP_ENV=production
-      # #       APP_KEY=your-app-key
