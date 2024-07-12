@@ -1,4 +1,4 @@
-name: Build and Deploy
+name: Deploy Laravel Project
 
 on:
   push:
@@ -6,8 +6,26 @@ on:
       - master
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: Checkout Code
         uses: actions/checkout@v2
+      - name: Install Dependencies
+        uses: actions/setup-php@v2
+      - name: Build and Test
+        run: |
+          php artisan build
+          php artisan test
+      - name: Deploy
+        uses: actions/deploy@v2
+        with:
+          deploy-script: "php artisan deploy"
+          # server: "your-server-ip"
+          # credentials: "your-deployment-credentials"
+      # - name: Configure Environment Variables
+      #   uses: actions/env@v2
+      #   with:
+      #     variables: |
+      #       APP_ENV=production
+      #       APP_KEY=your-app-key
