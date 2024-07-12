@@ -1,9 +1,6 @@
-name: Deploy Laravel Project
+name: Checkout Laravel Project
 
-on:
-  push:
-    branches:
-      - master
+on: [push, pull_request]
 
 jobs:
   deploy:
@@ -11,5 +8,3 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
-      - name: Install Dependencies
-        uses: actions/setup-php@v2
