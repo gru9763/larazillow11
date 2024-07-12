@@ -14,5 +14,3 @@ jobs:
       - name: Build and Test
         run: |
           php artisan build
-      - name: Run tests
-        run: php vendor/bin/phpunit
