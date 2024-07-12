@@ -3,8 +3,21 @@ name: Checkout Laravel Project
 on: [push, pull_request]
 
 jobs:
-  deploy:
+  Deploy:
+    name: Build and Deploy Laravel
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2.1.0
+        with:
+          fetch-depth: 2
+      - name: Build assets
+        run: npm install && npm run build
+
+      - name: Install PHP and Composer
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.2"
+          tools: "composer"
+
+      - name: Install PHP dependencies
+        run: composer install --no-dev --optimize-autoloader
